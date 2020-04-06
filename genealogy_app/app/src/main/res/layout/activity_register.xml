@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.RegisterActivity">
+
+    <TextView
+        android:id="@+id/register_activity_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_heading"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/register_form_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_activity_heading">
+
+        <EditText
+            android:id="@+id/email_field"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/register_password_field"
+            android:hint="@string/password_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/first_name_field"
+            android:hint="@string/firstName_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/middle_name_field"
+            android:hint="@string/middleName_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/last_name_field"
+            android:hint="@string/lastName_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/dob_field"
+            android:hint="@string/dob_hint"
+            android:inputType="date"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/location_field"
+            android:hint="@string/location_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/bio_field"
+            android:hint="@string/bio_hint"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+
+
+        <Button
+            android:id="@+id/registerSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/register_button_label"
+            android:layout_gravity="center"
+            android:onClick="handleSubmit"
+            />
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

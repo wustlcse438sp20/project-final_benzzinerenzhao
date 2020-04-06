@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">genealogy_app</string>
+    <!--these are for login activity-->
+    <string name="username_hint">Email</string>
+    <string name="password_hint">Password</string> <!--password hint is also used in RegisterActivity -->
+    <string name="login_button_label">Login</string>
+    <string name="register_button_label">Register</string>
+    <string name="mainActivity_divider">- or - </string>
+    <!-- for register activity -->
+    <string name="register_heading">Create New User</string>
+    <string name="firstName_hint">First Name</string>
+    <string name="middleName_hint">Middle Name (Optional)</string>
+    <string name="lastName_hint">Last Name</string>
+    <string name="email_hint">Email</string>
+    <string name="dob_hint">Date of Birth</string>
+    <string name="location_hint">Location</string>
+    <string name="bio_hint">Biography</string>
+
 </resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "206062368016",
+    "firebase_url": "https://cse438final.firebaseio.com",
+    "project_id": "cse438final",
+    "storage_bucket": "cse438final.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206062368016:android:e8e1086db89a5ee7686195",
+        "android_client_info": {
+          "package_name": "com.example.genealogy_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206062368016-6hj3daa1a31i5b4lhqcs5vqgc2iv7umb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTgiM61B8MCw259TPTJDOVmte6fw_cJTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206062368016-6hj3daa1a31i5b4lhqcs5vqgc2iv7umb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
