@@ -7,7 +7,7 @@
     tools:context=".Activities.LoginActivity">
     
     <EditText
-        android:id="@+id/email_field"
+        android:id="@+id/login_email_field"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/username_hint"
@@ -16,12 +16,12 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/password_field"
+        android:id="@+id/login_password_field"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_field"
+        app:layout_constraintTop_toBottomOf="@id/login_email_field"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
@@ -34,7 +34,7 @@
         android:onClick="loginHandler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_field"/>
+        app:layout_constraintTop_toBottomOf="@id/login_password_field"/>
 
     <TextView
         android:id="@+id/divider"

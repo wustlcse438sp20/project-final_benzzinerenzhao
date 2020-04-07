@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.genealogy_app.R
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_login.*
 
 //this is the login activity
 class LoginActivity : AppCompatActivity() {
@@ -31,13 +33,30 @@ class LoginActivity : AppCompatActivity() {
             //do nothing -- current activity is a login/signup page
         } else {
             Log.d(TAG, "user login detected, moving to main")
-            //start intent to homeActivity
+            //start intent to treeActivity
+            val intent = Intent(this, TreeActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
     //called by clicking on login button
     fun loginHandler(view: View?) {
-
+        val email = login_email_field.text.toString()
+        val password = login_password_field.text.toString()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                Toast.makeText(baseContext, "Login success!",
+                Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, TreeActivity::class.java)
+                startActivity(intent)
+                //call finish here so that hitting the back button results in exiting the app, not returning to the login screen
+                finish()
+            }
+            .addOnFailureListener{
+                Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show()
+            }
     }
 
     //called by onClick on register button
