@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if (currentUser == null) {
             Log.d(TAG, "no user login detected, displaying login page")
-            //do nothing -- current activity is a login/signup page
+            //do nothing -- current activity is a login page
         } else {
             Log.d(TAG, "user login detected, moving to main")
             //start intent to treeActivity

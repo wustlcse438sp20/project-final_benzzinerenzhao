@@ -15,5 +15,9 @@
     <string name="dob_hint">Date of Birth</string>
     <string name="location_hint">Location</string>
     <string name="bio_hint">Biography</string>
+    <!-- for tabs in tablayout -->
+    <string name="tab_home">home</string>
+    <string name="tab_trees">trees</string>
+    <string name="tab_profile">profile</string>
 
 </resources>
