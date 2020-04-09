@@ -28,7 +28,7 @@ class TreeActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        
+
 
         //db.collection("users") is indexed by email as the key, so you can query the users collection with auth.currentUser!!.email
         //  to get the current user's document
