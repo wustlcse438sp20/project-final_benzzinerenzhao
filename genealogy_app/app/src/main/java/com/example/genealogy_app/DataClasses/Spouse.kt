@@ -2,18 +2,15 @@ package com.example.genealogy_app.DataClasses
 
 import java.util.*
 
-data class Spouse(
-    var affiliation:Member,
-    var affiliationID:UUID,
-    var personID:UUID,
-    var person:Person,
-    var ranking:Int,
+class Spouse(ranking:Int):Membership() {
+    lateinit var affiliation: Member
+    lateinit var affiliationID: UUID
+    var ranking: Int
+
+    init{
+        this.ranking = ranking
+    }
 
 
 
-
-    var x:Float=0.0f,
-    var y:Float=0.0f,
-    var width:Float,
-    var height:Float
-):Membership()
+}

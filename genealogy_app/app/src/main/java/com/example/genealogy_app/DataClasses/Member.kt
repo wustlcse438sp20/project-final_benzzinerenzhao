@@ -2,27 +2,25 @@ package com.example.genealogy_app.DataClasses
 
 import java.util.*
 
-class Member(
-    var id:UUID,
-    var fatherID:UUID,
-    var father:Membership,
-    var motherID:UUID,
-    var mother:Membership,
-    var personID:UUID,
-    var person:Person,
-    var familyID:UUID,
-    var family:Family,
-    var seniority:Int,
-    var children:ArrayList<Member>,
-    var spouses:ArrayList<Spouse>,
+class Member(seniority:Int):Membership(){
+    var id:UUID
+    lateinit var fatherID:UUID
+    lateinit var father:Membership
+    lateinit var motherID:UUID
+    lateinit var mother:Membership
+    lateinit var familyID:UUID
+    lateinit var family:Family
+    var seniority:Int
+    lateinit var children:ArrayList<Member>
+    lateinit var spouses:ArrayList<Spouse>
 
 
-    var depth:Int = 1,
-    var fullWidth:Float,
-    var fullHeight:Float,
-    var x:Float=0.0f,
-    var y:Float=0.0f,
-    var width:Float,
-    var height:Float,
+    var depth:Int = 1
+    var fullWidth:Float=0f
+    var fullHeight:Float=0f
     var allChildrenAreSingle:Boolean = true
-):Membership()
+    init{
+        id = UUID.randomUUID()
+        this.seniority = seniority
+    }
+}

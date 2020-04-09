@@ -1,18 +1,17 @@
 package com.example.genealogy_app
 
-import android.graphics.Canvas
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PixelFormat
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import com.example.genealogy_app.DataClasses.Member
+import com.example.genealogy_app.DataClasses.Membership
+import com.example.genealogy_app.DataClasses.Person
 import com.example.genealogy_app.DataClasses.Spouse
 import java.util.*
 
-class FamilyTree :Drawable(){
-    private val mPaint: Paint? = null
-    override fun draw(canvas: Canvas) {
-    }
+class FamilyTree(ancestor:Member) :Drawable(){
+    
+    
+
     val textHeight = 18.0f
     val viewUnit = 15.0f
     val signSize = viewUnit
@@ -23,6 +22,198 @@ class FamilyTree :Drawable(){
     val horizontalDistance = viewUnit * 5
     val horizSmallDistance = viewUnit * 2.5f
     val verticalDistance = viewUnit * 5
+
+    private val lineColor = -0x808081
+    private val redColor = -0x10000
+    private val blueColor = -0xffff01
+    private val blackColor = -0x1000000
+
+    val mAncestor: Member
+    val mPaint:Paint
+
+    init{
+        mPaint = Paint()
+        mPaint.setAntiAlias(true)
+        mAncestor = ancestor
+        layout()
+    }
+    
+    
+    override fun draw(canvas: Canvas) {
+        // TODO Auto-generated method stub
+        if (mAncestor != null) {
+            drawFamily(canvas, mAncestor)
+            if (!isSingle(mAncestor)) {
+                drawLine(canvas, mAncestor)
+            }
+        }
+    }
+    
+    
+    private fun drawLine(canvas: Canvas, member: Member) {
+        mPaint.color = lineColor
+        mPaint.strokeWidth = 1f
+
+        val spouses: ArrayList<Spouse> = member.spouses
+        if (spouses != null) {
+            var last: Membership = member
+            for (spouse in spouses) {
+                canvas.drawLine(
+                    last.x + member.width,
+                    last.y + last.height / 2,
+                    spouse.x,
+                    spouse.y + spouse.height / 2,
+                    mPaint
+                )
+                last = spouse
+            }
+        }
+
+        if (getChildCount(member) > 0) {
+            val children: ArrayList<Member> = member.children
+            if (children.size == 1) {
+                val child = children[0]
+                canvas.drawLine(
+                    member.x + member.width / 2,
+                    member.y + member.height + signSize,
+                    child.x + child.width / 2,
+                    child.y,
+                    mPaint
+                )
+            } else {
+                val middleY: Float =
+                    member.y + member.height + verticalDistance / 2
+                canvas.drawLine(
+                    member.x + member.width / 2,
+                    member.y + member.height + signSize,
+                    member.x + member.width / 2,
+                    middleY,
+                    mPaint
+                )
+                val first = children[0]
+                val last = children[children.size - 1]
+                canvas.drawLine(
+                    first.x + first.width / 2,
+                    middleY,
+                    last.x + last.width / 2,
+                    middleY,
+                    mPaint
+                )
+                for (child in children) canvas.drawLine(
+                    child.x + child.width / 2,
+                    middleY,
+                    child.x + child.width / 2,
+                    child.y,
+                    mPaint
+                )
+            }
+        }
+    }
+
+
+    fun drawMember(canvas: Canvas, member: Membership) {
+        val person: Person = member.person
+        if (person != null) {
+            mPaint.textSize = fontSize
+            val bounds = Rect()
+            // 测量下文本的大小
+            val name: String = getName(person)
+            mPaint.strokeWidth = 1f
+            mPaint.getTextBounds(name, 0, name.length, bounds)
+            /*val photo: Bitmap = person.getPhoto()
+            if (photo != null) {
+                var x = member.x
+                var y = member.y
+                var height = member.height - bounds.height()
+                var width = member.width
+                
+                val iRatio = photo.height.toFloat() / photo.width
+                
+                val rRatio = height / width
+                
+                if (iRatio < rRatio) {
+                    val h = width * iRatio
+                    y += (height - h) / 2
+                    height = h
+                } else {
+                    val w = height / iRatio
+                    x += (width - w) / 2
+                    width = w
+                }
+                val dst = RectF(x, y, x + width, y + height)
+                canvas.drawBitmap(photo, null, dst, mPaint)
+            }*/
+            
+            val x = member.x + (member.width - bounds.width()) / 2
+            val y = member.y + member.height - mPaint.fontMetrics.descent
+            mPaint.color = blackColor
+            mPaint.style = Paint.Style.FILL
+            canvas.drawText(name, x, y, mPaint)
+        }
+        
+        /*if (member === mSelectedMember) mPaint.color =
+            FamilyTree.redColor else if (member === mBiologicalParent) mPaint.color =
+            FamilyTree.blueColor else mPaint.color = FamilyTree.lineColor*/
+        
+        mPaint.style = Paint.Style.STROKE
+        mPaint.strokeWidth = 2f
+        canvas.drawRect(member.getBounds(), mPaint)
+        if (member is Member) {
+            val m = member
+            if (!isSingle(m)) {
+                mPaint.color = lineColor
+                mPaint.strokeWidth = 1f
+                mPaint.style = Paint.Style.STROKE
+                val x = member.x + member.width / 2
+                val y = member.y + member.height
+                val half: Float = signSize / 2
+                canvas.drawRect(x - half, y, x + half, y + signSize, mPaint)
+                
+                mPaint.color = blackColor
+                mPaint.strokeWidth = 2f
+                canvas.drawLine(x - half + 1, y + half, x + half - 1, y + half, mPaint)
+                
+                //if (!m.expanded) canvas.drawLine(x, y + 1, x, y + signSize - 1, mPaint)
+            }
+        }
+    }
+
+
+    private fun drawFamily(canvas: Canvas, member: Member) {
+        drawMember(canvas, member)
+        
+        /*if (member === mSelectedMember && mBiologicalParent != null) { // 生父母底部画线起点
+            val x1: Float = mBiologicalParent.x + mBiologicalParent.width / 2
+            val y1: Float = mBiologicalParent.y + mBiologicalParent.height
+            
+            val x2 = member.x + member.width / 2
+            val y2 = member.y
+            
+            val y: Float = y2 - FamilyTree.verticalDistance / 2
+            mPaint.color = FamilyTree.blueColor
+            mPaint.strokeWidth = 2f
+            canvas.drawLine(x1, y1, x1, y, mPaint)
+            canvas.drawLine(x1, y, x2, y, mPaint)
+            canvas.drawLine(x2, y, x2, y2, mPaint)
+        }*/
+        
+        if (!isSingle(member)) {
+            val spouses: ArrayList<Spouse> = member.spouses
+            if (spouses != null) {
+                for (spouse in spouses) drawMember(canvas, spouse)
+            }
+            if (getChildCount(member) > 0) {
+                val children: ArrayList<Member> = member.children
+                for (child in children) {
+                    drawFamily(canvas, child)
+                    if (!isSingle(member)) {
+                        drawLine(canvas, child)
+                    }
+                }
+            }
+        }
+    }
+    
 
     override fun setAlpha(alpha: Int) { // TODO Auto-generated method stub
         mPaint!!.alpha = alpha
@@ -45,7 +236,7 @@ class FamilyTree :Drawable(){
     }
 
 
-    lateinit var mAncestor: Member
+    
     fun layout() {
         if (mAncestor != null) {
             calcDistance(mAncestor, 0)
@@ -162,4 +353,20 @@ class FamilyTree :Drawable(){
             return null
         }
     }
+
+    fun getName(person: Person): String {
+        if (person.surname == null) {
+            if (person.givenName == null) {
+                return ""
+            }else {
+                return person.givenName
+            }
+        } else if (person.givenName == null) {
+            return person.surname
+        } else {
+            return person.givenName + " " + person.surname
+        }
+}
+
+
 }
