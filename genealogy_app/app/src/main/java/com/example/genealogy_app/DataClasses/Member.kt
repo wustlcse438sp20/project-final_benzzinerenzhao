@@ -5,14 +5,14 @@ import java.util.*
 class Member(seniority:Int):Membership(){
     var id:UUID
     lateinit var fatherID:UUID
-    lateinit var father:Membership
+    var father:Membership?=null
     lateinit var motherID:UUID
-    lateinit var mother:Membership
+    var mother:Membership?=null
     lateinit var familyID:UUID
     lateinit var family:Family
     var seniority:Int
-    lateinit var children:ArrayList<Member>
-    lateinit var spouses:ArrayList<Spouse>
+    var children:ArrayList<Member>?=null
+    var spouses:ArrayList<Spouse>?=null
 
 
     var depth:Int = 1

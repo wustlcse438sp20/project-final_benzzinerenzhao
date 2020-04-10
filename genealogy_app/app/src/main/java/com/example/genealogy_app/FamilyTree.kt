@@ -13,7 +13,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
     
 
     val textHeight = 18.0f
-    val viewUnit = 15.0f
+    val viewUnit = 30.0f
     val signSize = viewUnit
     val viewMargin = viewUnit * 2
     val fontSize = viewUnit
@@ -54,7 +54,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
         mPaint.color = lineColor
         mPaint.strokeWidth = 1f
 
-        val spouses: ArrayList<Spouse> = member.spouses
+        val spouses = member.spouses
         if (spouses != null) {
             var last: Membership = member
             for (spouse in spouses) {
@@ -70,8 +70,8 @@ class FamilyTree(ancestor:Member) :Drawable(){
         }
 
         if (getChildCount(member) > 0) {
-            val children: ArrayList<Member> = member.children
-            if (children.size == 1) {
+            val children = member.children
+            if (children!!.size == 1) {
                 val child = children[0]
                 canvas.drawLine(
                     member.x + member.width / 2,
@@ -198,13 +198,13 @@ class FamilyTree(ancestor:Member) :Drawable(){
         }*/
         
         if (!isSingle(member)) {
-            val spouses: ArrayList<Spouse> = member.spouses
+            val spouses = member.spouses
             if (spouses != null) {
                 for (spouse in spouses) drawMember(canvas, spouse)
             }
             if (getChildCount(member) > 0) {
-                val children: ArrayList<Member> = member.children
-                for (child in children) {
+                val children = member.children
+                for (child in children!!) {
                     drawFamily(canvas, child)
                     if (!isSingle(member)) {
                         drawLine(canvas, child)
@@ -228,11 +228,11 @@ class FamilyTree(ancestor:Member) :Drawable(){
     }
 
     override fun getIntrinsicHeight(): Int { // TODO Auto-generated method stub
-        return (mAncestor.fullHeight + viewMargin * 2 + 0.5f) as Int
+        return (mAncestor.fullHeight + viewMargin * 2 + 0.5f).toInt()
     }
 
     override fun getIntrinsicWidth(): Int { // TODO Auto-generated method stub
-        return (mAncestor.fullWidth + viewMargin * 2 + 0.5f) as Int
+        return (mAncestor.fullWidth + viewMargin * 2 + 0.5f).toInt()
     }
 
 
@@ -256,8 +256,8 @@ class FamilyTree(ancestor:Member) :Drawable(){
         member.fullHeight = memberHeight
         var maxWidth: Float = memberWidth
         if (getChildCount(member)> 0) {
-            val children: ArrayList<Member> = member.children
-            for (child in children) {
+            val children= member.children
+            for (child in children!!) {
                 calcDistance(child, depth + 1)
                 if (!isSingle(child)){
                     member.allChildrenAreSingle = false
@@ -273,7 +273,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
             member.fullHeight =
                 maxHeight + member.height + verticalDistance
         }
-        val spouses: ArrayList<Spouse> = member.spouses
+        val spouses = member.spouses
         if (spouses != null && spouses.size > 0) {
             for (spouse in spouses) {
                 spouse.width = memberWidth
@@ -298,7 +298,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
             }
         }
         if (!isSingle(member)) {
-            val spouses: ArrayList<Spouse> = member.spouses
+            val spouses = member.spouses
             if (spouses != null) {
                 val mWidth: Float = (horizSmallDistance + memberWidth) * spouses.size + memberWidth
                 val right = member.x + mWidth
@@ -320,8 +320,8 @@ class FamilyTree(ancestor:Member) :Drawable(){
             val gap: Float = if (member.allChildrenAreSingle) horizSmallDistance else horizontalDistance
             val count: Int = getChildCount(member)
             if (count > 0) {
-                val children: ArrayList<Member> = member.children
-                for (child in children) {
+                val children = member.children
+                for (child in children!!) {
                     locate(child, x, y)
                     x += child.fullWidth + gap
                 }
@@ -335,13 +335,29 @@ class FamilyTree(ancestor:Member) :Drawable(){
 
     private fun getChildCount(member: Member):Int{
         if (member.children!=null){
-            return member.children.size
+            return member.children!!.size
         }
         return 0
     }
 
     private fun isSingle(member: Member):Boolean{
-        return ((member.children == null || member.children.size == 0) && (member.spouses == null || member.spouses.size == 0))
+        if(member.children==null&&member.spouses==null){
+            return true
+        }else if(member.children==null){
+            if(member.spouses!!.size>0){
+                return false
+            }
+            return true
+        }else if(member.spouses==null){
+            if(member.children!!.size>0){
+                return false
+            }
+            return true
+        }
+        if(member.children!!.size>0||member.spouses!!.size>0){
+            return false
+        }
+        return true
     }
 
     private fun getParent(member: Member): Member?{
