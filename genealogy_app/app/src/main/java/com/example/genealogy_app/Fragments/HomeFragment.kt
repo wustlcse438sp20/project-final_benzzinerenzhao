@@ -3,8 +3,10 @@ package com.example.genealogy_app.Fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.example.genealogy_app.DataClasses.Member
@@ -19,6 +21,11 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
+    val TAG = "HomeFragment.kt"
+
+    //used for scrolling
+    var downX = 0f
+    var downY = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +43,13 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
+        //disable this once we have actual trees created
         createDebugTree()
 
-
-
+        //set scrolling ontouch listener
+        tree_view.setOnTouchListener(){view: View, motion: MotionEvent ->
+            treeTouchListener(view, motion)
+        }
 
 
     }
@@ -75,6 +84,32 @@ class HomeFragment : Fragment() {
         donaldjr.mother=melania
 
         tree_view.setImageDrawable(FamilyTree(donald))
+    }
+
+    //touch listener for scrolling on the imageview of the tree
+    //citation: https://stackoverflow.com/questions/3058164/android-scrolling-an-imageview -- the java code
+    //  in the answers of this stack overflow question helped me develop this function
+    fun treeTouchListener(view: View, motion: MotionEvent): Boolean {
+        //Log.d(TAG, "detected touch on tree view")
+
+        var currentX: Float = 0f
+        var currentY: Float = 0f
+
+        when (motion.action) {
+            MotionEvent.ACTION_DOWN -> {
+                downX = motion.x
+                downY = motion.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                currentX = motion.x
+                currentY = motion.y
+                tree_view.scrollBy((downX - currentX).toInt(), (downY - currentY).toInt())
+                downX = currentX
+                downY = currentY
+            }
+        }
+
+        return true
     }
 
 
