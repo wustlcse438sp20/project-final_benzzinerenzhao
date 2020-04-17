@@ -35,6 +35,12 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         var auth = FirebaseAuth.getInstance()
         var email = auth.currentUser!!.email
 
@@ -62,9 +68,6 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
             activity!!.finish()
         }
-
-
-
     }
 
     fun updateProfileView(data: Map<String, Any>) {
