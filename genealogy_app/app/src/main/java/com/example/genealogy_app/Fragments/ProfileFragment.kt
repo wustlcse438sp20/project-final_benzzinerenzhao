@@ -72,6 +72,11 @@ class ProfileFragment : Fragment() {
 
     fun updateProfileView(data: Map<String, Any>) {
         var name = data["firstName"].toString() + " " + data["lastName"].toString()
+
+        //hopefully this helps with crashing?
+        if (profile_name_text == null) {
+            return
+        }
         profile_name_text.text = name;
 
         var dob = data["dob"]
