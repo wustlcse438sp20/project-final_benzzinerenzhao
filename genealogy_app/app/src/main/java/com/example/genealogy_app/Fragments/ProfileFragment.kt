@@ -1,6 +1,7 @@
 package com.example.genealogy_app.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.genealogy_app.Activities.LoginActivity
 
 import com.example.genealogy_app.R
 import com.google.firebase.auth.FirebaseAuth
@@ -52,6 +54,16 @@ class ProfileFragment : Fragment() {
                 Log.d(TAG,"Failed to get documentSnapshot")
             }
 
+        //handle logout click
+        profile_logout_button.setOnClickListener() {view ->
+            Log.d(TAG, "clicked logout button")
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+            activity!!.finish()
+        }
+
+
 
     }
 
@@ -71,6 +83,7 @@ class ProfileFragment : Fragment() {
         if (bio != null && bio.toString() != "")
             profile_bio.text = bio.toString()
     }
+
 
 
 }

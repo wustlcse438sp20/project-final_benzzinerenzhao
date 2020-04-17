@@ -29,5 +29,6 @@
     <string name="profile_bio_placeholder">User has not written their bio</string>
     <string name="profile_location_placeholder">Location: Unknown</string>
     <string name="profile_dob_placeholder">DOB: Unknown</string>
+    <string name="profile_logout_button_label">Logout</string>
 
 </resources>
