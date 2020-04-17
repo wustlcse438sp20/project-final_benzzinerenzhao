@@ -36,6 +36,17 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+
+        createDebugTree()
+
+
+
+
+
+    }
+
+    //creates an example tree view. useful if user has no data
+    fun createDebugTree() {
         var p1 = Person(id= UUID.randomUUID(),givenName = "Donald",surname = "Trump")
         var p2= Person(id= UUID.randomUUID(),givenName = "Melania",surname = "Trump")
         var p3 = Person(id= UUID.randomUUID(),givenName = "Ivanka",surname = "Trump")
@@ -63,11 +74,7 @@ class HomeFragment : Fragment() {
         donaldjr.father=donald
         donaldjr.mother=melania
 
-        test_view.setImageDrawable(FamilyTree(donald))
-
-
-
-
+        tree_view.setImageDrawable(FamilyTree(donald))
     }
 
 
