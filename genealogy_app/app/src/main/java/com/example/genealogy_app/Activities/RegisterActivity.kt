@@ -47,7 +47,8 @@ class RegisterActivity : AppCompatActivity() {
                             "lastName" to last_name_field.text.toString(),
                             "dob" to dob_field.text.toString(),
                             "location" to location_field.text.toString(),
-                            "bio" to bio_field.text.toString()
+                            "bio" to bio_field.text.toString(),
+                            "trees" to ArrayList<String>()
                         )
 
                         db.collection("users").document(email).set(user)
