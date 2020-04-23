@@ -102,7 +102,6 @@ class TreeListFragment : Fragment() {
                         }
                         list.add(TreeListItem(newId, newName))
                     }
-
                     adapter.notifyDataSetChanged()
                 }
                 else {

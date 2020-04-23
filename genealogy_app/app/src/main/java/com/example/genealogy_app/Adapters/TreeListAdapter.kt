@@ -1,12 +1,17 @@
 package com.example.genealogy_app.Adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.genealogy_app.Activities.TreeActivity
 import com.example.genealogy_app.DataClasses.TreeListItem
+import com.example.genealogy_app.Fragments.HomeFragment
 import com.example.genealogy_app.R
 
 class TreeListViewHolder(inflater: LayoutInflater, parent: ViewGroup):
@@ -26,6 +31,11 @@ class TreeListViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         name = tree.name
         id = tree.id
         nameText.text = tree.name
+        itemView.setOnClickListener{
+            val treeIntent = Intent(itemView.context, TreeActivity::class.java)
+            treeIntent.putExtra("treeId", id)
+            ContextCompat.startActivity(itemView.context, treeIntent, null)
+        }
     }
 
 }
@@ -41,6 +51,7 @@ class TreeListAdapter(val list: ArrayList<TreeListItem>?) : RecyclerView.Adapter
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 Log.d(TAG, "clicked on TreeListItem with id = '" + holder.id + "' and name = '" + holder.name + "'")
+
             }
         })
 
