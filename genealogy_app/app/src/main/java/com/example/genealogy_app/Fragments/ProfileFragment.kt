@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.genealogy_app.Activities.EditProfileActivity
 import com.example.genealogy_app.Activities.LoginActivity
 
 import com.example.genealogy_app.R
@@ -68,6 +69,11 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
             activity!!.finish()
         }
+
+        profile_edit_button.setOnClickListener() {view ->
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun updateProfileView(data: Map<String, Any>) {
@@ -92,6 +98,10 @@ class ProfileFragment : Fragment() {
             profile_bio.text = bio.toString()
     }
 
+    /*fun editProfile(view: View){
+        var intent=Intent(activity,EditProfileActivity::class.java)
+        startActivityForResult(intent,0)
+    }*/
 
 
 }

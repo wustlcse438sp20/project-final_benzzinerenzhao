@@ -20,8 +20,9 @@ class EditPersonActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
     }
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    var auth = FirebaseAuth.getInstance()
+    var db = Firebase.firestore
+    var email = auth.currentUser!!.email
 
     val PICK_PROFILE_IMAGE = 1
 
@@ -29,8 +30,7 @@ class EditPersonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_person)
 
-        auth = FirebaseAuth.getInstance()
-        db = Firebase.firestore
+
 
 
         //db.collection("users") is indexed by email as the key, so you can query the users collection with auth.currentUser!!.email
@@ -38,21 +38,21 @@ class EditPersonActivity : AppCompatActivity() {
 
     }
     fun submitEdits(view: View){
-        if(edit_first_name_field.text!=null){
+        if(edit_first_name_field!=null){
             var newFirstName = edit_first_name_field.text.toString()
-            /*db.collection("players").document(viewModel.email!!)
-                .update("chips", viewModel.player.chips)*/
+            /*db.collection("user").document(email!!)
+                .update("trees", )*/
         }
-        if(edit_last_name_field.text!=null){
+        if(edit_last_name_field!=null){
             var newLastName = edit_last_name_field.text.toString()
         }
-        if(edit_dob_field.text!=null){
+        if(edit_dob_field!=null){
             var newDOB = edit_dob_field.text.toString()
         }
-        if(edit_location_field.text!=null){
+        if(edit_location_field!=null){
             var newLocation = edit_location_field.text.toString()
         }
-        if(edit_bio_field.text != null){
+        if(edit_bio_field!=null){
             var newBiography = edit_bio_field.text.toString()
         }
 
