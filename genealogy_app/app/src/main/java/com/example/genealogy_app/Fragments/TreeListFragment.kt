@@ -157,7 +157,7 @@ class TreeListFragment : Fragment() {
         //TODO: add tree to tree collection, and then get the ID of that document and store the name and ID as a TreeListItem in the trees field of the user collection
         //val treeMap: MutableMap<String, Any> = HashMap()
         val currentUserId = FirebaseAuth.getInstance().currentUser!!.email
-        val tree = TreeListItem(name, name+currentUserId)
+        val tree = TreeListItem(name+currentUserId, name)
 
         // Add a new document with a generated ID
         db.collection("users").document(currentUserId!!)
@@ -181,7 +181,7 @@ class TreeListFragment : Fragment() {
 
 
         // Add a new document with a generated ID
-        db.collection("trees").document(name)
+        db.collection("trees").document(name + currentUserId)
             .set(newTreeMap)
 
         list.add(tree)

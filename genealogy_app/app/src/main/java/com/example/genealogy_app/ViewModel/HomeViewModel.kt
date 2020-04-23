@@ -12,7 +12,6 @@ import java.util.*
 class HomeViewModel (application: Application): AndroidViewModel(application){
     var currentTree:FamilyTree?=null
 
-
 }
 
 

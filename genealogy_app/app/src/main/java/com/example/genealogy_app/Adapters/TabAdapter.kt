@@ -9,7 +9,7 @@ import com.example.genealogy_app.Fragments.HomeFragment
 import com.example.genealogy_app.Fragments.ProfileFragment
 import com.example.genealogy_app.Fragments.TreeListFragment
 
-class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+/*class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount(): Int  = 3
 
@@ -34,4 +34,4 @@ class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, FragmentPagerAd
             else -> return "error"
         }
     }
-}
+}*/

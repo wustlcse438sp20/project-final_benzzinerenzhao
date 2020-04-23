@@ -53,19 +53,21 @@ class HomeFragment : Fragment(){
 
 
         val arguments = arguments // this is supposed to have the id, but its still null
-        //Toast.makeText(activity, arguments.toString(), Toast.LENGTH_LONG).show()
         if(arguments != null && arguments.containsKey("treeId")){
+
             val treeId = arguments.getString("treeId")
+
             val db = Firebase.firestore
             db.collection("trees").document(treeId!!).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         Log.d(TAG, "Successfully got documentSnapshot")
 
-                        val ancestor = document.data!!["ancestor"] as Member
-                        Log.d("TAG", "trees field from user document: " + ancestor.toString())
-                        viewModel.currentTree = FamilyTree(ancestor)
-                        tree_view.setImageDrawable(viewModel.currentTree)
+                        val ancestor = document.data!!["ancestor"]
+
+                        // uncomment these to print tree that user clicked on after fixing above code
+                        /*viewModel.currentTree = FamilyTree(ancestor)
+                        tree_view.setImageDrawable(viewModel.currentTree)*/
 
                     } else {
                         Log.d(TAG, "Successfully queried collection, but document was null")
