@@ -116,7 +116,6 @@ class FamilyTree(ancestor:Member) :Drawable(){
         if (person != null) {
             mPaint.textSize = fontSize
             val bounds = Rect()
-            // 测量下文本的大小
             val name: String = getName(person)
             mPaint.strokeWidth = 1f
             mPaint.getTextBounds(name, 0, name.length, bounds)
@@ -182,7 +181,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
     private fun drawFamily(canvas: Canvas, member: Member) {
         drawMember(canvas, member)
         
-        /*if (member === mSelectedMember && mBiologicalParent != null) { // 生父母底部画线起点
+        /*if (member === mSelectedMember && mBiologicalParent != null) {
             val x1: Float = mBiologicalParent.x + mBiologicalParent.width / 2
             val y1: Float = mBiologicalParent.y + mBiologicalParent.height
             
@@ -333,14 +332,14 @@ class FamilyTree(ancestor:Member) :Drawable(){
         }
     }
 
-    private fun getChildCount(member: Member):Int{
+    fun getChildCount(member: Member):Int{
         if (member.children!=null){
             return member.children!!.size
         }
         return 0
     }
 
-    private fun isSingle(member: Member):Boolean{
+    fun isSingle(member: Member):Boolean{
         if(member.children==null&&member.spouses==null){
             return true
         }else if(member.children==null){
@@ -360,7 +359,7 @@ class FamilyTree(ancestor:Member) :Drawable(){
         return true
     }
 
-    private fun getParent(member: Member): Member?{
+    fun getParent(member: Member): Member?{
         if (member.father != null && member.father is Member){
             return member.father as Member
         }else if (member.mother != null && member.mother is Member) {
