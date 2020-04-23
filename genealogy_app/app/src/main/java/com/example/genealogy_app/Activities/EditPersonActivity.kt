@@ -37,7 +37,7 @@ class EditPersonActivity : AppCompatActivity() {
                 .update("chips", viewModel.player.chips)*/
         }
         if(last_name_field!=null){
-            var newaLastName = last_name_field.text.toString()
+            var newLastName = last_name_field.text.toString()
         }
         if(dob_field!=null){
             var newDOB = dob_field.text.toString()
