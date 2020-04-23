@@ -4,12 +4,12 @@ import java.util.*
 
 class Member(seniority:Int):Membership(){
     var id:UUID
-    lateinit var fatherID:UUID
+    //lateinit var fatherID:UUID
     var father:Membership?=null
-    lateinit var motherID:UUID
+    //lateinit var motherID:UUID
     var mother:Membership?=null
-    lateinit var familyID:UUID
-    lateinit var family:Family
+    //lateinit var familyID:UUID
+    //lateinit var family:Family
     var seniority:Int
     var children:ArrayList<Member>?=null
     var spouses:ArrayList<Spouse>?=null

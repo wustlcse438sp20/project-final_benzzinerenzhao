@@ -9,7 +9,7 @@ open class Membership{
     var y:Float=0.0f
     var width:Float=0.0f
     var height:Float=0.0f
-    lateinit var personID:UUID
+    // var personID:UUID
     lateinit var person:Person
     open fun getBounds(): RectF {
         return RectF(x, y, x + width, y + height)

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genealogy_app.Adapters.TreeListAdapter
@@ -15,11 +17,18 @@ import com.example.genealogy_app.DataClasses.TreeListItem
 import com.example.genealogy_app.R
 import kotlinx.android.synthetic.main.fragment_tree_list.*
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.genealogy_app.DataClasses.Member
+import com.example.genealogy_app.DataClasses.Person
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_add_tree.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class TreeListFragment : Fragment() {
@@ -48,18 +57,10 @@ class TreeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //TODO: this adds debug data to demonstrate the functionality of the recyclerview and adapter. remove this when we have data in the 'trees' field in a users document
-        list.add(TreeListItem("test name 1", "testid1"))
+        /*list.add(TreeListItem("test name 1", "testid1"))
         list.add(TreeListItem("test name 2", "testid2"))
-        list.add(TreeListItem("test name 3", "testid3"))
-        adapter = TreeListAdapter(list)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity!!.applicationContext)
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                context!!,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+        list.add(TreeListItem("test name 3", "testid3"))*/
+
 
     }
     override fun onStart() {
@@ -69,12 +70,30 @@ class TreeListFragment : Fragment() {
         var email = auth.currentUser!!.email
         db = Firebase.firestore
 
+        adapter = TreeListAdapter(list)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity!!.applicationContext)
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context!!,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         //Get user trees (ArrayList<TreeListItem>) stored in collection users -> document -> trees
         db.collection("users").document(email!!).get()
             .addOnSuccessListener {document ->
                 if (document != null) {
                     Log.d(TAG, "Successfully got documentSnapshot")
-                    list = document.data!!["trees"] as ArrayList<TreeListItem>
+                    val treeList = document.data!!["trees"] as ArrayList<TreeListItem>
+                    Toast.makeText(activity, treeList.toString(), Toast.LENGTH_LONG).show() // as you can see here, we can get the list from firestore
+                    /*for(i in 0 until treeList.size){
+                        Toast.makeText(activity, treeList[i].toString(), Toast.LENGTH_LONG).show()
+                    }*/
+                    list.clear()
+
+                    // This will cause the program to crash
+                    //list.addAll(treeList)
+                    adapter.notifyDataSetChanged()
                 }
                 else {
                     Log.d(TAG, "Successfully queried collection, but document was null")
@@ -84,7 +103,6 @@ class TreeListFragment : Fragment() {
             .addOnFailureListener {
                 Log.d(TAG,"Failed to get documentSnapshot")
             }
-
 
         addFloatingActionButton()
     }
@@ -99,9 +117,14 @@ class TreeListFragment : Fragment() {
                 // Add action buttons
                 .setPositiveButton("Create Tree",
                     DialogInterface.OnClickListener { dialog, id ->
-                        val name = treeName_field.text.toString()
-                        if (name != null && name.length > 3) {
-                            addTree(name)
+                        val nameBox = view.findViewById(R.id.treeName_field) as EditText
+                        val name = nameBox.text.toString()
+                        val ancestorNameBox = view.findViewById(R.id.ancestorName_field) as EditText
+                        val ancestorName = ancestorNameBox.text.toString()
+                        val ancestorSurnameBox = view.findViewById(R.id.ancestorSurname_field) as EditText
+                        val ancestorSurname = ancestorSurnameBox.text.toString()
+                        if (name.length > 3) {
+                            addTree(name, ancestorName, ancestorSurname)
                         }
                     })
                 .setNegativeButton("Cancel",
@@ -121,9 +144,42 @@ class TreeListFragment : Fragment() {
     }
 
 
-    fun addTree(name: String) {
+    fun addTree(name: String, ancestorName: String, ancestorSurname: String) {
         //TODO: add tree to tree collection, and then get the ID of that document and store the name and ID as a TreeListItem in the trees field of the user collection
+        //val treeMap: MutableMap<String, Any> = HashMap()
+        val currentUserId = FirebaseAuth.getInstance().currentUser!!.email
+        val tree = TreeListItem(name, name+currentUserId)
+
+        // Add a new document with a generated ID
+        db.collection("users").document(currentUserId!!)
+            .update(
+                "trees", FieldValue.arrayUnion(tree)
+            )
+            .addOnSuccessListener(OnSuccessListener { documentReference ->
+                Toast.makeText(activity, "Tree created", Toast.LENGTH_LONG).show()
+            })
+            .addOnFailureListener(OnFailureListener { e ->
+                Toast.makeText(activity, "Failed to create tree!", Toast.LENGTH_LONG).show()
+            })
+
+        val newTreeMap: MutableMap<String, Any> = HashMap()
+        val ancestor: Member = Member(1)
+        val p = Person(id= UUID.randomUUID(),givenName = ancestorName,surname = ancestorSurname)
+        ancestor.person = p
+        newTreeMap["name"] = name
+        newTreeMap["id"] = name + currentUserId
+        newTreeMap["ancestor"] = ancestor
+
+
+        // Add a new document with a generated ID
+        db.collection("trees").document(name)
+            .set(newTreeMap)
+
+        list.add(tree)
+        adapter.notifyDataSetChanged()
     }
+
+
 
 
 }

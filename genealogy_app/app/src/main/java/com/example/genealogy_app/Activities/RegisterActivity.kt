@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.genealogy_app.DataClasses.TreeListItem
 import com.example.genealogy_app.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
                             "dob" to dob_field.text.toString(),
                             "location" to location_field.text.toString(),
                             "bio" to bio_field.text.toString(),
-                            "trees" to ArrayList<String>()
+                            "trees" to ArrayList<TreeListItem>()
                         )
 
                         db.collection("users").document(email).set(user)
