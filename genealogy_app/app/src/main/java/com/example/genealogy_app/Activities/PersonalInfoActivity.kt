@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_personal_info.*
 
 class PersonalInfoActivity : AppCompatActivity() {
     var RequestEdit=1
+    var id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_info)
@@ -26,6 +27,10 @@ class PersonalInfoActivity : AppCompatActivity() {
         var DOB = (bundle?.getString("DOB")!!)
         var birthPlace = (bundle?.getString("birthPlace")!!)
         var biography = (bundle?.getString("biography")!!)
+
+        //TODO: get extra of type UUID for the ID, and then pass it to the editPersonalInfo intent so we know exactly which person on the tree to edit
+        //id = bundle?.get
+
         person_first_name.text="First Name: "+firstName
         person_last_name.text="Last Name: "+lastName
         //person_gender.text="Gender: "+gender

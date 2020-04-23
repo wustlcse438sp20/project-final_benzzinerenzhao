@@ -26,9 +26,10 @@
             android:onClick="editImageOnClick"
             android:id="@+id/edit_picture_person"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            />
+
+
 
         <EditText
             android:id="@+id/edit_first_name_field"
