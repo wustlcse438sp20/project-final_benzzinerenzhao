@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.EditPersonActivity">
+    tools:context=".Activities.EditProfileActivity">
 
 
     <LinearLayout
-        android:id="@+id/edit_person_form_container"
+        android:id="@+id/edit_profile_form_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -23,14 +23,14 @@
             android:layout_height="200dp"
             android:layout_marginBottom="50dp"
             android:src="@drawable/upload_hint_picture"
-            android:id="@+id/edit_picture_person"
+            android:id="@+id/edit_picture_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
             />
 
         <EditText
-            android:id="@+id/edit_first_name_field"
+            android:id="@+id/edit_first_name_field_profile"
             android:hint="@string/firstName_hint"
             android:inputType="text"
             android:layout_width="300dp"
@@ -39,7 +39,7 @@
 
 
         <EditText
-            android:id="@+id/edit_last_name_field"
+            android:id="@+id/edit_last_name_field_profile"
             android:hint="@string/lastName_hint"
             android:inputType="text"
             android:layout_width="300dp"
@@ -47,7 +47,7 @@
             android:layout_gravity="center"/>
 
         <EditText
-            android:id="@+id/edit_dob_field"
+            android:id="@+id/edit_dob_field_profile"
             android:hint="@string/dob_hint"
             android:inputType="date"
             android:layout_width="300dp"
@@ -55,7 +55,7 @@
             android:layout_gravity="center"/>
 
         <EditText
-            android:id="@+id/edit_location_field"
+            android:id="@+id/edit_location_field_profile"
             android:hint="@string/location_hint"
             android:inputType="text"
             android:layout_width="300dp"
@@ -63,7 +63,7 @@
             android:layout_gravity="center"/>
 
         <EditText
-            android:id="@+id/edit_bio_field"
+            android:id="@+id/edit_bio_field_profile"
             android:hint="@string/bio_hint"
             android:inputType="textMultiLine"
             android:layout_width="300dp"
@@ -73,13 +73,13 @@
 
 
         <Button
-            android:id="@+id/submit_edit_button"
+            android:id="@+id/submit_edit_button_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Submit Changes"
             android:layout_gravity="center"
-            android:onClick="submitEdits"
+            android:onClick="submitProfileEdits"
             />
 
 
