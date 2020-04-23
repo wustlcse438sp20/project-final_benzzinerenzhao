@@ -74,7 +74,7 @@ class EditPersonActivity : AppCompatActivity() {
                 return
             } else {
                 val inputStream = getContentResolver().openInputStream(data.data!!)
-                val bytes =
+                
             }
         }
     }
