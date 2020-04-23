@@ -137,7 +137,7 @@ class HomeFragment : Fragment(){
             val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
             personalInfoIntent.putExtra("firstName",tappedPerson.givenName)
             personalInfoIntent.putExtra("lastName",tappedPerson.surname)
-            personalInfoIntent.putExtra("gender",genderToString(tappedPerson.gender))
+            //personalInfoIntent.putExtra("gender",genderToString(tappedPerson.gender))
             var DOB="unknown"
             if(tappedPerson.birthDate!=null){
                 DOB=tappedPerson.birthDate.toString()

@@ -17,8 +17,8 @@ class FamilyTree(ancestor:Member) :Drawable(){
     val signSize = viewUnit
     val viewMargin = viewUnit * 2
     val fontSize = viewUnit
-    val memberWidth = viewUnit * 6
-    val memberHeight = viewUnit * 9
+    val memberWidth = viewUnit * 8
+    val memberHeight = viewUnit * 10
     val horizontalDistance = viewUnit * 5
     val horizSmallDistance = viewUnit * 2.5f
     val verticalDistance = viewUnit * 5

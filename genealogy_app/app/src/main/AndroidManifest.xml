@@ -12,7 +12,9 @@
         <activity android:name=".Activities.TreeActivity"></activity>
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.PersonalInfoActivity" />
+        <activity android:name=".Activities.EditPersonActivity" />
         <activity android:name=".Activities.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
