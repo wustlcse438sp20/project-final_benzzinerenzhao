@@ -1,5 +1,6 @@
 package com.example.genealogy_app.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 class EditProfileActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
+
     }
     var auth = FirebaseAuth.getInstance()
     var db = Firebase.firestore
@@ -32,23 +34,33 @@ class EditProfileActivity : AppCompatActivity() {
         //  to get the current user's document
     }
     fun submitProfileEdits(view: View){
+        var result = Intent()
         if(edit_first_name_field_profile!=null){
             var newFirstName = edit_first_name_field_profile.text.toString()
-            /*db.collection("user").document(email!!)
-                .update("trees", )*/
+            db.collection("users").document(email!!)
+                .update("firstName",newFirstName)
         }
         if(edit_last_name_field_profile!=null){
             var newLastName = edit_last_name_field_profile.text.toString()
+            db.collection("users").document(email!!)
+                .update("lastName",newLastName)
         }
         if(edit_dob_field_profile!=null){
             var newDOB = edit_dob_field_profile.text.toString()
+            db.collection("users").document(email!!)
+                .update("dob",newDOB)
         }
         if(edit_location_field_profile!=null){
             var newLocation = edit_location_field_profile.text.toString()
+            db.collection("users").document(email!!)
+                .update("location",newLocation)
         }
         if(edit_bio_field_profile!=null){
             var newBiography = edit_bio_field_profile.text.toString()
+            db.collection("users").document(email!!)
+                .update("bio",newBiography)
         }
-
+        setResult(0,result)
+        this.finish()
     }
 }

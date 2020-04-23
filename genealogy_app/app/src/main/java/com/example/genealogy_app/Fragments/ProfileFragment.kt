@@ -72,8 +72,30 @@ class ProfileFragment : Fragment() {
 
         profile_edit_button.setOnClickListener() {view ->
             val intent = Intent(activity, EditProfileActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,0)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        var auth = FirebaseAuth.getInstance()
+        var email = auth.currentUser!!.email
+
+        var db = FirebaseFirestore.getInstance()
+        db.collection("users").document(email!!).get()
+            .addOnSuccessListener {document ->
+                if (document != null) {
+                    Log.d(TAG, "Successfully got documentSnapshot")
+                    updateProfileView(document.data!!)
+                }
+                else {
+                    Log.d(TAG, "Successfully queried collection, but document was null")
+                }
+
+            }
+            .addOnFailureListener {
+                Log.d(TAG,"Failed to get documentSnapshot")
+            }
     }
 
     fun updateProfileView(data: Map<String, Any>) {

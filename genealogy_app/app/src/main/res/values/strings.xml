@@ -30,7 +30,7 @@
 <!-- for profile fragment -->
     <string name="profile_placeHolderName">Placeholder Name</string>
     <string name="profile_gender_placeholder">no gender specified</string>
-    <string name="profile_bio_label">Biography</string>
+    <string name="profile_bio_label">Biography：</string>
     <string name="profile_bio_placeholder">User has not written their bio</string>
     <string name="profile_location_placeholder">Location: Unknown</string>
     <string name="profile_dob_placeholder">DOB: Unknown</string>
