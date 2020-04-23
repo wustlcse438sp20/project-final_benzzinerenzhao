@@ -1,6 +1,8 @@
 package com.example.genealogy_app.Activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,7 +32,7 @@ class PersonalInfoActivity : AppCompatActivity() {
         person_birth_place.text="Birth Place: "+birthPlace
         person_biography.text="Biography: "+biography
     }
-    fun goBack(){
-        this.finish()
+    fun goBack(view: View){
+       this.finish()
     }
 }

@@ -8,10 +8,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.genealogy_app.Activities.PersonalInfoActivity
 import com.example.genealogy_app.DataClasses.*
 import com.example.genealogy_app.FamilyTree
 import com.example.genealogy_app.R
+import com.example.genealogy_app.ViewModel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
@@ -25,7 +27,7 @@ class HomeFragment : Fragment(){
     var downY = 0f
     var xScrolled = 0f
     var yScrolled = 0f
-    lateinit var currentTree:FamilyTree
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class HomeFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
-
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         //disable this once we have actual trees created
         createDebugTree()
 
@@ -89,8 +91,8 @@ class HomeFragment : Fragment(){
         ivanka.mother=melania
         donaldjr.father=donald
         donaldjr.mother=melania
-        currentTree=FamilyTree(donald)
-        tree_view.setImageDrawable(currentTree)
+        viewModel.currentTree=FamilyTree(donald)
+        tree_view.setImageDrawable(viewModel.currentTree)
 
 
 
@@ -129,30 +131,33 @@ class HomeFragment : Fragment(){
         var x = downX+xScrolled
         var y =downY+yScrolled
         val pointTapped = PointF(x,y)
-        var tappedMember= locateTapped(currentTree.mAncestor,pointTapped)
-        var tappedPerson = tappedMember!!.person
-        val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
-        personalInfoIntent.putExtra("firstName",tappedPerson.givenName)
-        personalInfoIntent.putExtra("lastName",tappedPerson.surname)
-        personalInfoIntent.putExtra("gender",genderToString(tappedPerson.gender))
-        var DOB="unknown"
-        if(tappedPerson.birthDate!=null){
-            DOB=tappedPerson.birthDate.toString()
+        var tappedMember= locateTapped(viewModel.currentTree!!.mAncestor,pointTapped)
+        if (tappedMember!=null){
+            var tappedPerson = tappedMember!!.person
+            val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
+            personalInfoIntent.putExtra("firstName",tappedPerson.givenName)
+            personalInfoIntent.putExtra("lastName",tappedPerson.surname)
+            personalInfoIntent.putExtra("gender",genderToString(tappedPerson.gender))
+            var DOB="unknown"
+            if(tappedPerson.birthDate!=null){
+                DOB=tappedPerson.birthDate.toString()
+            }
+            personalInfoIntent.putExtra("DOB",DOB)
+            var birthPlace="unknown"
+            if(tappedPerson.birthPlace!=null){
+                var temp = tappedPerson.birthPlace
+                birthPlace=temp!!
+            }
+            personalInfoIntent.putExtra("birthPlace",birthPlace)
+            var biography="unknown"
+            if(tappedPerson.biography!=null){
+                var temp = tappedPerson.biography
+                biography=temp!!
+            }
+            personalInfoIntent.putExtra("biography",biography)
+            startActivity(personalInfoIntent)
         }
-        personalInfoIntent.putExtra("DOB",DOB)
-        var birthPlace="unknown"
-        if(tappedPerson.birthPlace!=null){
-            var temp = tappedPerson.birthPlace
-            birthPlace=temp!!
-        }
-        personalInfoIntent.putExtra("birthPlace",birthPlace)
-        var biography="unknown"
-        if(tappedPerson.biography!=null){
-            var temp = tappedPerson.biography
-            biography=temp!!
-        }
-        personalInfoIntent.putExtra("biography",biography)
-        startActivity(personalInfoIntent)
+
         return true
     }
 
@@ -170,11 +175,11 @@ class HomeFragment : Fragment(){
     }
     private fun locateTapped(member: Member, tapped: PointF): Membership? {
         if (tapped.x >= member.x && tapped.x < member.x + member.width && tapped.y >= member.y &&
-            (tapped.y <= member.y + member.height || !currentTree.isSingle(member) && tapped.y <= member.y + member.height + currentTree.signSize * 4)
+            (tapped.y <= member.y + member.height || !viewModel.currentTree!!.isSingle(member) && tapped.y <= member.y + member.height + viewModel.currentTree!!.signSize * 4)
         ) {
             return member
         }
-        if (!currentTree.isSingle(member)) {
+        if (!viewModel.currentTree!!.isSingle(member)) {
             val spouses = member.spouses
             if (spouses != null) {
                 for (spouse in spouses) {
