@@ -84,15 +84,25 @@ class TreeListFragment : Fragment() {
             .addOnSuccessListener {document ->
                 if (document != null) {
                     Log.d(TAG, "Successfully got documentSnapshot")
-                    val treeList = document.data!!["trees"] as ArrayList<TreeListItem>
-                    Toast.makeText(activity, treeList.toString(), Toast.LENGTH_LONG).show() // as you can see here, we can get the list from firestore
-                    /*for(i in 0 until treeList.size){
-                        Toast.makeText(activity, treeList[i].toString(), Toast.LENGTH_LONG).show()
-                    }*/
-                    list.clear()
 
-                    // This will cause the program to crash
-                    //list.addAll(treeList)
+                    //firebase stores objects as hashmaps,
+                    val treeList = document.data!!["trees"] as ArrayList<HashMap<String, String>>
+                    Log.d("TAG", "trees field from user document: " + treeList.toString())
+
+                    list.clear()
+                    Log.d(TAG, "treeList has type: " + treeList.javaClass.name)
+
+                    //construct treeListItems from the hashmap returned from firebase
+                    for (map in treeList) {
+                        var newName = ""
+                        var newId = ""
+                        for ((key, value) in map) {
+                            if (key == "id") newId = value
+                            if (key == "name") newName = value
+                        }
+                        list.add(TreeListItem(newId, newName))
+                    }
+
                     adapter.notifyDataSetChanged()
                 }
                 else {
