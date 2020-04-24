@@ -36,6 +36,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/ancestor_s_last_name" />
+        android:hint="Ancestor's Last Name" />
 
 </LinearLayout>

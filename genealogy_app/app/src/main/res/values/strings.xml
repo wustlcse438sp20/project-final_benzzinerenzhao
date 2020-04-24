@@ -36,9 +36,6 @@
     <string name="profile_dob_placeholder">DOB: Unknown</string>
     <string name="profile_logout_button_label">Logout</string>
     <string name="ancestor_s_first_name">Ancestor\'s First Name</string>
-    <string name="change_ancestor">Change Ancestor</string>
-    <string name="edit">Edit</string>
-    <string name="ancestor_s_last_name">Ancestor\'s Last Name</string>
 
 
 </resources>

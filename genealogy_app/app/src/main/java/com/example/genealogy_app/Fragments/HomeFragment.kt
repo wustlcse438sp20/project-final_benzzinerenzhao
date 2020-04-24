@@ -1,6 +1,5 @@
 package com.example.genealogy_app.Fragments
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
@@ -9,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.genealogy_app.Activities.PersonalInfoActivity
@@ -24,7 +21,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_tree_list.*
 import java.util.*
 
 
@@ -84,48 +80,6 @@ class HomeFragment : Fragment(){
                         viewModel.currentAncestor=root
                         viewModel.currentTree = FamilyTree(root)
                         tree_view.setImageDrawable(viewModel.currentTree)
-                        change_ancestor_button.setOnClickListener {
-
-                            val view = requireActivity().layoutInflater.inflate(R.layout.dialog_change_ancestor, null)
-                            val builder = AlertDialog.Builder(context!!)
-                            val dialog: AlertDialog? = activity?.let {
-                                builder.setView(view)
-                                    // Add action buttons
-                                    .setPositiveButton("Change Ancestor",
-                                        DialogInterface.OnClickListener { dialog, id ->
-                                            val ancestorNameBox = view.findViewById(R.id.ancestorName_field_change) as EditText
-                                            val ancestorName = ancestorNameBox.text.toString()
-                                            val ancestorSurnameBox = view.findViewById(R.id.ancestorSurname_field_change) as EditText
-                                            val ancestorSurname = ancestorSurnameBox.text.toString()
-                                            if (ancestorName != "" && ancestorSurname != "") {
-                                                val newAncestor = Member(1)
-                                                val p = Person(givenName = ancestorName,surname = ancestorSurname)
-                                                newAncestor.person = p
-                                                newAncestor.children = ArrayList<Member>()
-                                                newAncestor.children!!.add(root)
-                                                viewModel.currentAncestor = newAncestor
-                                                viewModel.currentTree = FamilyTree(newAncestor)
-                                                tree_view.setImageDrawable(viewModel.currentTree)
-                                                val newTreeMap: MutableMap<String, Any> = HashMap()
-
-                                                // Add a new document with a generated ID
-                                                db.collection("trees").document(treeId)
-                                                    .update("ancestor", newAncestor)
-
-                                            }
-                                        })
-                                    .setNegativeButton("Cancel",
-                                        DialogInterface.OnClickListener { dialog, id ->
-                                            //user canceled dialog
-                                            dialog.cancel()
-                                        })
-                                    .setTitle("Change Ancestor")
-                                builder.create()
-                            }
-                            dialog!!.show()
-
-
-                        }
 
                     } else {
                         Log.d(TAG, "Successfully queried collection, but document was null")
@@ -134,8 +88,6 @@ class HomeFragment : Fragment(){
         } else{
             createDebugTree()
         }
-
-
 
 
         tree_view.setLongClickable(true)
