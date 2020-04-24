@@ -3,7 +3,7 @@ package com.example.genealogy_app.DataClasses
 import java.util.*
 
 class Member(seniority:Int):Membership(){
-    var id:UUID
+    //var id:UUID
     //lateinit var fatherID:UUID
     var father:Membership?=null
     //lateinit var motherID:UUID
@@ -20,7 +20,7 @@ class Member(seniority:Int):Membership(){
     var fullHeight:Float=0f
     var allChildrenAreSingle:Boolean = true
     init{
-        id = UUID.randomUUID()
+        //id = UUID.randomUUID()
         this.seniority = seniority
     }
 }

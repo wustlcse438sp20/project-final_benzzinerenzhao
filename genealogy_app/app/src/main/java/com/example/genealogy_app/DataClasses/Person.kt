@@ -3,9 +3,9 @@ package com.example.genealogy_app.DataClasses
 import java.util.*
 
 data class Person(
-    var id:UUID,
-    var surname:String,
-    var givenName:String,
+    //var id:UUID,
+    var surname:String="",
+    var givenName:String="",
     var gender:Gender?=null,
     var birthDate:Date?=null,
     //var deathDate:Date?=null,
