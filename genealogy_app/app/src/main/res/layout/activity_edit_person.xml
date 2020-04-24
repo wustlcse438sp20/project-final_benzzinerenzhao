@@ -83,7 +83,24 @@
             android:layout_gravity="center"
             android:onClick="submitEdits"
             />
-
+        <Button
+            android:id="@+id/add_child_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="add Child"
+            android:layout_gravity="center"
+            android:onClick="addChild"
+            />
+        <Button
+            android:id="@+id/add_spouse_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="add spouse"
+            android:layout_gravity="center"
+            android:onClick="addSpouse"
+            />
 
 
 

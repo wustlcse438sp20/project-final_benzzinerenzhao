@@ -26,16 +26,13 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_tree_list.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(){
 
     val TAG = "HomeFragment.kt"
-    var RequestEdit=0
+    var EDIT_CODE=0
     var OK_CODE=1
-    var AddChildRequest=2
-    var AddSpouseRequest=3
     //used for scrolling
     var downX = 0f
     var downY = 0f
@@ -43,7 +40,6 @@ class HomeFragment : Fragment(){
     var yScrolled = 0f
     private lateinit var viewModel: HomeViewModel
     var tappedMember:Membership?=null
-    var tappedRealMember:Member?=null
     var auth = FirebaseAuth.getInstance()
     var db = Firebase.firestore
     var email = auth.currentUser!!.email
@@ -159,7 +155,7 @@ class HomeFragment : Fragment(){
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode==RequestEdit){
+        if(resultCode==EDIT_CODE){
             var bundle=data!!.extras
             if(bundle?.getString("firstName")!=null){
                 var temp = bundle?.getString("firstName")
@@ -185,32 +181,6 @@ class HomeFragment : Fragment(){
                 .update("ancestor",viewModel.currentTree!!.mAncestor)
         }
         if(resultCode==OK_CODE){
-
-        }
-        if(resultCode==AddSpouseRequest){
-            var bundle=data!!.extras
-            var firstName = bundle?.getString("spouseFirstName")
-            var lastName= bundle?.getString("spouseLastName")
-            var p=Person(givenName=firstName!!,surname = lastName!!)
-            var spouses = tappedRealMember!!.spouses
-            var spouse:Spouse
-            if(spouses!=null&&!spouses.isEmpty()){
-                spouse=Spouse(tappedRealMember!!.spouses!!.size)
-                spouse.person=p
-                tappedRealMember!!
-                    .spouses!!.add(spouse)
-            }else{
-                spouse = Spouse(1)
-                spouse.person=p
-                tappedRealMember!!
-                    .spouses=ArrayList<Spouse>()
-                tappedRealMember!!
-                    .spouses!!.add(spouse)
-            }
-            tree_view.setImageDrawable(viewModel.currentTree)
-            db.collection("trees").document(viewModel.currentTreeID!!)
-                .update("ancestor",viewModel.currentTree!!.mAncestor)
-
 
         }
     }
@@ -286,12 +256,8 @@ class HomeFragment : Fragment(){
         val pointTapped = PointF(x,y)
         tappedMember= locateTapped(viewModel.currentTree!!.mAncestor,pointTapped)
         if (tappedMember!=null){
-            if(tappedMember is Member){
-                tappedRealMember=locateTappedMember(viewModel.currentTree!!.mAncestor,pointTapped)
-            }
             var tappedPerson = tappedMember!!.person
             val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
-            personalInfoIntent.putExtra("isMember",tappedMember is Member)
             personalInfoIntent.putExtra("firstName",tappedPerson.givenName)
             personalInfoIntent.putExtra("lastName",tappedPerson.surname)
             //personalInfoIntent.putExtra("id", tappedPerson.id)
@@ -350,26 +316,6 @@ class HomeFragment : Fragment(){
             if (children != null) {
                 for (child in children) {
                     val ret: Membership? = locateTapped(child, tapped)
-                    if (ret != null) {
-                        return ret
-                    }
-                }
-            }
-        }
-        return null
-    }
-
-    private fun locateTappedMember(member: Member, tapped: PointF): Member? {
-        if (tapped.x >= member.x && tapped.x < member.x + member.width && tapped.y >= member.y &&
-            (tapped.y <= member.y + member.height || !viewModel.currentTree!!.isSingle(member) && tapped.y <= member.y + member.height + viewModel.currentTree!!.signSize * 4)
-        ) {
-            return member
-        }
-        if (!viewModel.currentTree!!.isSingle(member)) {
-            val children = member.children
-            if (children != null) {
-                for (child in children) {
-                    val ret: Member? = locateTappedMember(child, tapped)
                     if (ret != null) {
                         return ret
                     }

@@ -3,7 +3,6 @@ package com.example.genealogy_app.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,12 +11,10 @@ import com.example.genealogy_app.R
 import kotlinx.android.synthetic.main.activity_personal_info.*
 
 class PersonalInfoActivity : AppCompatActivity() {
-    var RequestEdit=0
+    var RequestEdit=1
+    var EDIT_CODE=0
     var OK_CODE=1
-    var AddChildRequest=2
-    var AddSpouseRequest=3
     var id = ""
-    var isMember:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_info)
@@ -32,7 +29,6 @@ class PersonalInfoActivity : AppCompatActivity() {
         var DOB = (bundle?.getString("DOB")!!)
         var birthPlace = (bundle?.getString("birthPlace")!!)
         var biography = (bundle?.getString("biography")!!)
-        isMember=(bundle?.getBoolean("isMember"))
 
         //TODO: get extra of type UUID for the ID, and then pass it to the editPersonalInfo intent so we know exactly which person on the tree to edit
         //id = bundle?.get
@@ -55,9 +51,9 @@ class PersonalInfoActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==RequestEdit){
+        if(resultCode==EDIT_CODE){
             var bundle=data!!.extras
-            //var b = bundle!!.getString("firstName")
+            var b = bundle!!.getString("firstName")
             var result = Intent()
             if(bundle?.getString("firstName")!=null){
                 result.putExtra("firstName",bundle?.getString("firstName"))
@@ -74,17 +70,7 @@ class PersonalInfoActivity : AppCompatActivity() {
             if(bundle?.getString("bio")!=null){
                 result.putExtra("bio",bundle?.getString("bio"))
             }
-            setResult(RequestEdit,result)
-            this.finish()
-        }
-        if(requestCode==AddSpouseRequest){
-            var bundle=data!!.extras
-            //var b = bundle!!.getString("firstName")
-            var result = Intent()
-            result.putExtra("spouseFirstName",bundle?.getString("spouseFirstName"))
-            result.putExtra("spouseLastName",bundle?.getString("spouseLastName"))
-
-            setResult(AddSpouseRequest,result)
+            setResult(EDIT_CODE,result)
             this.finish()
         }
     }
@@ -92,23 +78,5 @@ class PersonalInfoActivity : AppCompatActivity() {
     override fun onActivityReenter(resultCode: Int, data: Intent?) {
         super.onActivityReenter(resultCode, data)
 
-    }
-    fun addChild(view: View){
-        if(isMember){
-            val intent = Intent(this,AddChildActivity::class.java)
-            startActivityForResult(intent,AddChildRequest)
-        }else{
-            Toast.makeText(baseContext, "You cannot add child to a spouse of a member of the family",
-                Toast.LENGTH_SHORT).show()
-        }
-    }
-    fun addSpouse(view:View){
-        if(isMember) {
-            val intent = Intent(this, AddSpouseActivity::class.java)
-            startActivityForResult(intent,AddSpouseRequest)
-        }else{
-            Toast.makeText(baseContext, "You cannot add spouse to a spouse of a member of the family",
-                Toast.LENGTH_SHORT).show()
-        }
     }
 }
