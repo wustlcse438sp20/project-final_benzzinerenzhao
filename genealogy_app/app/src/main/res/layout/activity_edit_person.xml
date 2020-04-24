@@ -12,16 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginBottom="50dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/upload_hint_picture"
             android:onClick="editImageOnClick"
             android:id="@+id/edit_picture_person"
@@ -78,10 +78,28 @@
             android:id="@+id/submit_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="5dp"
             android:text="Submit Changes"
             android:layout_gravity="center"
             android:onClick="submitEdits"
+            />
+        <Button
+            android:id="@+id/add_child_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="add Child"
+            android:layout_gravity="center"
+            android:onClick="addChild"
+            />
+        <Button
+            android:id="@+id/add_spouse_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="add spouse"
+            android:layout_gravity="center"
+            android:onClick="addSpouse"
             />
 
 

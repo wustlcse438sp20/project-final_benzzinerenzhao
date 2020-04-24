@@ -173,7 +173,7 @@ class TreeListFragment : Fragment() {
 
         val newTreeMap: MutableMap<String, Any> = HashMap()
         val ancestor: Member = Member(1)
-        val p = Person(id= UUID.randomUUID(),givenName = ancestorName,surname = ancestorSurname)
+        val p = Person(/*id= UUID.randomUUID(),*/givenName = ancestorName,surname = ancestorSurname)
         ancestor.person = p
         newTreeMap["name"] = name
         newTreeMap["id"] = name + currentUserId

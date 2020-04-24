@@ -57,17 +57,17 @@ class EditProfileActivity : AppCompatActivity() {
             db.collection("users").document(email!!)
                 .update("lastName",newLastName)
         }
-        if(edit_dob_field_profile!=null){
+        if(edit_dob_field_profile.text!=null&&edit_dob_field_profile.text.toString()!=""){
             var newDOB = edit_dob_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("dob",newDOB)
         }
-        if(edit_location_field_profile!=null){
+        if(edit_location_field_profile.text!=null&&edit_location_field_profile.text.toString()!=""){
             var newLocation = edit_location_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("location",newLocation)
         }
-        if(edit_bio_field_profile!=null){
+        if(edit_bio_field_profile.text!=null&&edit_bio_field_profile.text.toString()!=""){
             var newBiography = edit_bio_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("bio",newBiography)

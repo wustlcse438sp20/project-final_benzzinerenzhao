@@ -17,6 +17,7 @@ import com.example.genealogy_app.FamilyTree
 import com.example.genealogy_app.R
 import com.example.genealogy_app.ViewModel.HomeViewModel
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -63,11 +64,15 @@ class HomeFragment : Fragment(){
                     if (document != null) {
                         Log.d(TAG, "Successfully got documentSnapshot")
 
-                        val ancestor = document.data!!["ancestor"]
+                        val tree = document.toObject<Tree>()
+                        //Toast.makeText(activity, tree.toString(), Toast.LENGTH_LONG).show()
 
                         // uncomment these to print tree that user clicked on after fixing above code
-                        /*viewModel.currentTree = FamilyTree(ancestor)
-                        tree_view.setImageDrawable(viewModel.currentTree)*/
+                        var root = Member(1)
+                        val person = tree!!.ancestor!!.person
+                        root.person = person!!
+                        viewModel.currentTree = FamilyTree(root)
+                        tree_view.setImageDrawable(viewModel.currentTree)
 
                     } else {
                         Log.d(TAG, "Successfully queried collection, but document was null")
@@ -95,11 +100,11 @@ class HomeFragment : Fragment(){
 
     //creates an example tree view. useful if user has no data
     fun createDebugTree() {
-        val p1 = Person(id= UUID.randomUUID(),givenName = "Donal]d",surname = "Trump")
-        val p2= Person(id= UUID.randomUUID(),givenName = "Melania",surname = "Trump")
-        val p3 = Person(id= UUID.randomUUID(),givenName = "Ivanka",surname = "Trump")
-        val p4= Person(id= UUID.randomUUID(),givenName = "Donald Jr.",surname = "Trump")
-        val p5 = Person(id= UUID.randomUUID(),givenName = "Jared",surname = "Kushner")
+        val p1 = Person(/*id= UUID.randomUUID(),*/givenName = "Donal]d",surname = "Trump")
+        val p2= Person(/*id= UUID.randomUUID(),*/givenName = "Melania",surname = "Trump")
+        val p3 = Person(/*id= UUID.randomUUID(),*/givenName = "Ivanka",surname = "Trump")
+        val p4= Person(/*id= UUID.randomUUID(),*/givenName = "Donald Jr.",surname = "Trump")
+        val p5 = Person(/*id= UUID.randomUUID(),*/givenName = "Jared",surname = "Kushner")
         val donald:Member = Member(1)
         val melania:Spouse = Spouse(1)
         val ivanka:Member = Member(1)
@@ -167,7 +172,7 @@ class HomeFragment : Fragment(){
             val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
             personalInfoIntent.putExtra("firstName",tappedPerson.givenName)
             personalInfoIntent.putExtra("lastName",tappedPerson.surname)
-            personalInfoIntent.putExtra("id", tappedPerson.id)
+            //personalInfoIntent.putExtra("id", tappedPerson.id)
             //personalInfoIntent.putExtra("gender",genderToString(tappedPerson.gender))
             var DOB="unknown"
             if(tappedPerson.birthDate!=null){
