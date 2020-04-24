@@ -19,9 +19,9 @@
 
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginBottom="50dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/upload_hint_picture"
             android:onClick="editImageOnClick"
             android:id="@+id/edit_picture_person"
