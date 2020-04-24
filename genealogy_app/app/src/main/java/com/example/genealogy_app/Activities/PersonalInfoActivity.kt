@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_personal_info.*
 
 class PersonalInfoActivity : AppCompatActivity() {
     var RequestEdit=1
+    var EDIT_CODE=0
+    var OK_CODE=1
     var id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +41,38 @@ class PersonalInfoActivity : AppCompatActivity() {
         person_biography.text="Biography: "+biography
     }
     fun goBack(view: View){
-       this.finish()
+        var result = Intent()
+        setResult(OK_CODE,result)
+        this.finish()
     }
     fun editPersonalInfo(view: View){
         var editPersonIntent = Intent(this,EditPersonActivity::class.java)
         startActivityForResult(editPersonIntent,RequestEdit)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode==EDIT_CODE){
+            var bundle=data!!.extras
+            var b = bundle!!.getString("firstName")
+            var result = Intent()
+            if(bundle?.getString("firstName")!=null){
+                result.putExtra("firstName",bundle?.getString("firstName"))
+            }
+            if(bundle?.getString("lastName")!=null){
+                result.putExtra("lastName",bundle?.getString("lastName"))
+            }
+            if(bundle?.getString("dob")!=null){
+                result.putExtra("dob",bundle?.getString("dob"))
+            }
+            if(bundle?.getString("location")!=null){
+                result.putExtra("location",bundle?.getString("location"))
+            }
+            if(bundle?.getString("bio")!=null){
+                result.putExtra("bio",bundle?.getString("bio"))
+            }
+            setResult(EDIT_CODE,result)
+            this.finish()
+        }
     }
 
     override fun onActivityReenter(resultCode: Int, data: Intent?) {
