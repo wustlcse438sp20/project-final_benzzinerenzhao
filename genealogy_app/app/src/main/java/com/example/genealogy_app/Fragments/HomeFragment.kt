@@ -181,6 +181,7 @@ class HomeFragment : Fragment(){
                 var temp = bundle?.getString("bio")
                 tappedMember!!.person.biography=temp!!
             }
+            Log.d(TAG, "viewmodel is null?:" + viewModel.currentTreeID)
             db.collection("trees").document(viewModel.currentTreeID!!)
                 .update("ancestor",viewModel.currentTree!!.mAncestor)
         }
