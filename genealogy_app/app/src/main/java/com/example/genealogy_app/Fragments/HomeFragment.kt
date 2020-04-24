@@ -16,7 +16,6 @@ import com.example.genealogy_app.DataClasses.*
 import com.example.genealogy_app.FamilyTree
 import com.example.genealogy_app.R
 import com.example.genealogy_app.ViewModel.HomeViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -27,18 +26,14 @@ import java.util.*
 class HomeFragment : Fragment(){
 
     val TAG = "HomeFragment.kt"
-    var EDIT_CODE=0
-    var OK_CODE=1
+
     //used for scrolling
     var downX = 0f
     var downY = 0f
     var xScrolled = 0f
     var yScrolled = 0f
     private lateinit var viewModel: HomeViewModel
-    var tappedMember:Membership?=null
-    var auth = FirebaseAuth.getInstance()
-    var db = Firebase.firestore
-    var email = auth.currentUser!!.email
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,9 +57,8 @@ class HomeFragment : Fragment(){
         if(arguments != null && arguments.containsKey("treeId")){
 
             val treeId = arguments.getString("treeId")
-            viewModel.currentTreeID=treeId
 
-
+            val db = Firebase.firestore
             db.collection("trees").document(treeId!!).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
@@ -77,7 +71,6 @@ class HomeFragment : Fragment(){
                         var root = Member(1)
                         val person = tree!!.ancestor!!.person
                         root.person = person!!
-                        viewModel.currentAncestor=root
                         viewModel.currentTree = FamilyTree(root)
                         tree_view.setImageDrawable(viewModel.currentTree)
 
@@ -103,38 +96,6 @@ class HomeFragment : Fragment(){
         tree_view.x=0f
 
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode==EDIT_CODE){
-            var bundle=data!!.extras
-            if(bundle?.getString("firstName")!=null){
-                var temp = bundle?.getString("firstName")
-                tappedMember!!.person.givenName=temp!!
-            }
-            if(bundle?.getString("lastName")!=null){
-                var temp = bundle?.getString("lastName")
-                tappedMember!!.person.surname=temp!!
-            }
-            if(bundle?.getString("dob")!=null){
-                var temp = bundle?.getString("dob")
-                tappedMember!!.person.birthDate=Date(temp!!)
-            }
-            if(bundle?.getString("location")!=null){
-                var temp = bundle?.getString("location")
-                tappedMember!!.person.birthPlace=temp!!
-            }
-            if(bundle?.getString("bio")!=null){
-                var temp = bundle?.getString("bio")
-                tappedMember!!.person.biography=temp!!
-            }
-            db.collection("trees").document(viewModel.currentTreeID!!)
-                .update("ancestor",viewModel.currentTree!!.mAncestor)
-        }
-        if(resultCode==OK_CODE){
-
-        }
     }
 
     //creates an example tree view. useful if user has no data
@@ -166,7 +127,6 @@ class HomeFragment : Fragment(){
         donaldjr.father=donald
         donaldjr.mother=melania
         viewModel.currentTree=FamilyTree(donald)
-        viewModel.currentAncestor=donald
         tree_view.setImageDrawable(viewModel.currentTree)
 
 
@@ -206,7 +166,7 @@ class HomeFragment : Fragment(){
         var x = downX+xScrolled
         var y =downY+yScrolled
         val pointTapped = PointF(x,y)
-        tappedMember= locateTapped(viewModel.currentTree!!.mAncestor,pointTapped)
+        var tappedMember= locateTapped(viewModel.currentTree!!.mAncestor,pointTapped)
         if (tappedMember!=null){
             var tappedPerson = tappedMember!!.person
             val personalInfoIntent = Intent(this.context,PersonalInfoActivity::class.java)
@@ -231,7 +191,7 @@ class HomeFragment : Fragment(){
                 biography=temp!!
             }
             personalInfoIntent.putExtra("biography",biography)
-            startActivityForResult(personalInfoIntent,0)
+            startActivity(personalInfoIntent)
         }
 
         return true
@@ -275,9 +235,6 @@ class HomeFragment : Fragment(){
             }
         }
         return null
-    }
-
-    fun addAncestor(view: View){
     }
 
 

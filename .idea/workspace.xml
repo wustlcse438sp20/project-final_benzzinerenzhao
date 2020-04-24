@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
     <list default="true" id="f1fe93e6-0571-438a-9bdf-191000cc6e9a" name="Default Changelist" comment="" />
-=======
-    <list default="true" id="d247253e-974b-466e-afac-4d37ab7c6f84" name="Default Changelist" comment="" />
->>>>>>> origin/master
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
   <component name="DefaultGradleProjectSettings">
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
@@ -223,12 +218,6 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
   </component>
-=======
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectId" id="1axFekdT834icpDlaf74vbW7sDc" />
->>>>>>> origin/master
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -246,7 +235,6 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
       <changelist id="f1fe93e6-0571-438a-9bdf-191000cc6e9a" name="Default Changelist" comment="" />
       <created>1587591174156</created>
       <option name="number" value="Default" />
@@ -289,25 +277,5 @@
     <entry file="file://$PROJECT_DIR$/.idea/project-final_benzzinerenzhao.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-=======
-      <changelist id="d247253e-974b-466e-afac-4d37ab7c6f84" name="Default Changelist" comment="" />
-      <created>1587669435115</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1587669435115</updated>
-    </task>
-    <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
->>>>>>> origin/master
   </component>
 </project>

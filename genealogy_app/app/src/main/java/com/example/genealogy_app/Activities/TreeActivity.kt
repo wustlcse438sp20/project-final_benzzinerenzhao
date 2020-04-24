@@ -27,19 +27,18 @@ class TreeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     var treeId:String? = ""
-    lateinit var viewModel:HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tree)
 
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
         var isTree = false
         val intent = intent
         val extras = intent.extras
         if(extras != null){
             if(extras.containsKey("treeId")){
                 treeId = extras.getString("treeId")
-                viewModel.currentTreeID=treeId
                 //Toast.makeText(this, treeId, Toast.LENGTH_LONG).show()
                 isTree = true
             }
