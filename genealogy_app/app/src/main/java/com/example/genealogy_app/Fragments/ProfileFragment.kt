@@ -2,8 +2,10 @@ package com.example.genealogy_app.Fragments
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -118,6 +120,14 @@ class ProfileFragment : Fragment() {
         var bio = data["bio"]
         if (bio != null && bio.toString() != "")
             profile_bio.text = bio.toString()
+
+        //if image is not null, convert base64 to bitmap and change imageview
+        var image = data["image"]
+        if (image != null) {
+            var base64 = Base64.decode(image.toString(), Base64.DEFAULT)
+            var bitmap = BitmapFactory.decodeByteArray(base64, 0, base64.size)
+            profile_picture.setImageBitmap(bitmap)
+        }
     }
 
     /*fun editProfile(view: View){

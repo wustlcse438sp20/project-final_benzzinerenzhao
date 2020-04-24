@@ -1,6 +1,7 @@
 package com.example.genealogy_app.Activities
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,9 @@ import android.graphics.BitmapFactory
 import android.media.Image
 import android.util.Base64
 import android.util.Log
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import com.example.genealogy_app.ViewModel.HomeViewModel
 import java.io.ByteArrayOutputStream
 
 
@@ -25,10 +29,12 @@ class EditPersonActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
     }
+    var EDIT_CODE=0
     var auth = FirebaseAuth.getInstance()
     var db = Firebase.firestore
     var email = auth.currentUser!!.email
     val TAG = "EditPersonActivity.kt"
+    lateinit var viewModel:HomeViewModel
 
     val PICK_PROFILE_IMAGE = 1
 
@@ -51,41 +57,43 @@ class EditPersonActivity : AppCompatActivity() {
 
         //store updates in this hashmap
         var update = HashMap<String, Any>()
-
+        var result = Intent()
         if (imageBase64 != "") {
             update.put("image", imageBase64)
         }
 
-        if(edit_first_name_field!=null){
+        if(edit_first_name_field!=null && edit_first_name_field.text.toString() != ""){
             var newFirstName = edit_first_name_field.text.toString()
-            /*db.collection("user").document(email!!)
-                .update("trees", )*/
-            update.put("givenName", newFirstName)
+            result.putExtra("firstName",newFirstName)
         }
-        if(edit_last_name_field!=null){
+        if(edit_last_name_field != null && edit_last_name_field.text.toString() != ""){
             var newLastName = edit_last_name_field.text.toString()
-            update.put("surname", newLastName)
+            result.putExtra("lastName",newLastName)
         }
-        if(edit_dob_field!=null){
+        if(edit_dob_field.text!=null&&edit_dob_field.text.toString()!=""){
             var newDOB = edit_dob_field.text.toString()
-            update.put("birthDate", newDOB)
+            result.putExtra("dob",newDOB)
         }
-        if(edit_location_field!=null){
+        if(edit_location_field.text!=null&&edit_location_field.text.toString()!=""){
             var newLocation = edit_location_field.text.toString()
-            update.put("birthPlace", newLocation)
+            result.putExtra("location",newLocation)
         }
-        if(edit_bio_field!=null){
+        if(edit_bio_field.text!=null&&edit_bio_field.text.toString()!=""){
             var newBiography = edit_bio_field.text.toString()
-            update.put("biography", newBiography)
+            result.putExtra("bio",newBiography)
+
         }
 
         //TODO: update person. Need to grab UUID from PersonalInfoActivity
         //var document = db.collection("collection").document()
 
+        setResult(EDIT_CODE,result)
+        this.finish()
     }
 
     fun addChild(view: View){
-
+        val intent = Intent(this,PersonalInfoActivity::class.java)
+        startActivity(intent)
     }
     fun addSpouse(view:View){
 
