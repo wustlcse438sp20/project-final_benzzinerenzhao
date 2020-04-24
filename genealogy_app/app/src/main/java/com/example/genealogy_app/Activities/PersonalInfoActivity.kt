@@ -40,11 +40,14 @@ class PersonalInfoActivity : AppCompatActivity() {
         person_birth_place.text="Location: "+birthPlace
         person_biography.text="Biography: "+biography
     }
+
+    /*
     fun goBack(view: View){
         var result = Intent()
         setResult(OK_CODE,result)
         this.finish()
     }
+    */
     fun editPersonalInfo(view: View){
         var editPersonIntent = Intent(this,EditPersonActivity::class.java)
         startActivityForResult(editPersonIntent,RequestEdit)

@@ -231,7 +231,8 @@ class HomeFragment : Fragment(){
                 biography=temp!!
             }
             personalInfoIntent.putExtra("biography",biography)
-            startActivityForResult(personalInfoIntent,0)
+            startActivity(personalInfoIntent)
+            //startActivityForResult(personalInfoIntent,0)
         }
 
         return true
