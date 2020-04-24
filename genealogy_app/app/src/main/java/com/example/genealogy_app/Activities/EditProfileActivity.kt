@@ -35,27 +35,27 @@ class EditProfileActivity : AppCompatActivity() {
     }
     fun submitProfileEdits(view: View){
         var result = Intent()
-        if(edit_first_name_field_profile!=null){
+        if(edit_first_name_field_profile.text!=null&&edit_first_name_field_profile.text.toString()!=""){
             var newFirstName = edit_first_name_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("firstName",newFirstName)
         }
-        if(edit_last_name_field_profile!=null){
+        if(edit_last_name_field_profile.text!=null&&edit_last_name_field_profile.text.toString()!=""){
             var newLastName = edit_last_name_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("lastName",newLastName)
         }
-        if(edit_dob_field_profile!=null){
+        if(edit_dob_field_profile.text!=null&&edit_dob_field_profile.text.toString()!=""){
             var newDOB = edit_dob_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("dob",newDOB)
         }
-        if(edit_location_field_profile!=null){
+        if(edit_location_field_profile.text!=null&&edit_location_field_profile.text.toString()!=""){
             var newLocation = edit_location_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("location",newLocation)
         }
-        if(edit_bio_field_profile!=null){
+        if(edit_bio_field_profile.text!=null&&edit_bio_field_profile.text.toString()!=""){
             var newBiography = edit_bio_field_profile.text.toString()
             db.collection("users").document(email!!)
                 .update("bio",newBiography)
