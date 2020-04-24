@@ -15,6 +15,7 @@
         <activity android:name=".Activities.EditPersonActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.AddChildActivity" />
+        <activity android:name=".Activities.AddSpouseActivity" />
         <activity android:name=".Activities.LoginActivity">
 
             <intent-filter>

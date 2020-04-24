@@ -91,13 +91,7 @@ class EditPersonActivity : AppCompatActivity() {
         this.finish()
     }
 
-    fun addChild(view: View){
-        val intent = Intent(this,PersonalInfoActivity::class.java)
-        startActivity(intent)
-    }
-    fun addSpouse(view:View){
 
-    }
 
     //called by the imageView to change a profile picture, starts an intent to gallery to pick an image
     fun editImageOnClick(view: View?) {
